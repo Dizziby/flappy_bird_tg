@@ -1,0 +1,8 @@
+.game {
+  position: relative;
+  width: 288px;
+  height: 512px;
+  background: url("../../public/image/bg.png");
+  overflow: hidden;
+
+}
