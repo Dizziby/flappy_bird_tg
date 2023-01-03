@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect, useRef} from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import {Foreground} from './Foreground'
 import {useAppDispatch} from '../hooks/useAppDispatch'
@@ -28,19 +28,38 @@ export const Game = () => {
         fly()
       }
       if (status !== 'playing') {
-        start()
+        start(status)
       }
     }
-    document.addEventListener('keypress', handleKeyPress)
-  }, [])
+    document.addEventListener('keypress',handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress',handleKeyPress)
+    }
+  }, [status])
 
-  const start = () => {
+  const birdYRef = useRef(null)
+  const xRef = useRef(null)
+  const pipesRef = useRef(null)
+
+  useEffect(() => {
+    birdYRef.current = birdY
+  }, [birdY])
+
+  useEffect(() => {
+    xRef.current = x
+  }, [x])
+
+  useEffect(() => {
+    pipesRef.current = pipes
+  }, [pipes])
+
+  const start = (status) => {
     if (status !== 'playing') {
-      gameLoop = setInterval(() => {
+       gameLoop = setInterval(() => {
         dispatch({type: 'FALL'})
         dispatch({type: 'RUNNING'})
 
-        check()
+        check(birdYRef.current, xRef.current, pipesRef.current)
       }, 200)
 
       pipeGenerator = setInterval(() => {
@@ -55,7 +74,7 @@ export const Game = () => {
     dispatch({type: 'FLY'})
   }
 
-  const check = () => {
+  const check = (birdY, x, pipes) => {
     const challenge = pipes
       .map(({topHeight}, i) => {
         return {
@@ -71,7 +90,7 @@ export const Game = () => {
         }
       })
 
-    if (birdY > 512 - 108) {
+    if (birdY > 512 - 108 || birdY < 0) {
       dispatch({type: 'GAME_OVER'})
     }
 
