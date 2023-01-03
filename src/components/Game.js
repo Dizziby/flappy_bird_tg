@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import {Foreground} from './Foreground'
 import {useAppDispatch} from '../hooks/useAppDispatch'
@@ -15,6 +15,10 @@ export const Game = () => {
   const pipes = useAppSelector((state) => state.pipe.pipes)
   const x = useAppSelector((state) => state.pipe.x)
 
+  // console.log(birdY, "birdY")
+  // console.log(x, "pipe.x")
+  // console.log(status, "status")
+
   const dispatch = useAppDispatch()
 
   if (status === 'game-over') {
@@ -22,21 +26,25 @@ export const Game = () => {
     clearInterval(pipeGenerator)
   }
 
-  useEffect(() => {
-    const handleKeyPress = (e) => {
-      if (e.keyCode === 32) {
-        fly()
-      }
-      if (status !== 'playing') {
-        start()
-      }
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 32) {
+      fly()
     }
-    document.addEventListener('keypress', handleKeyPress)
-  }, [])
-
-  const start = () => {
     if (status !== 'playing') {
-      gameLoop = setInterval(() => {
+      start(status)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keypress',handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress',handleKeyPress)
+    }
+  }, [status])
+
+  const start = (status) => {
+    if (status !== 'playing') {
+       gameLoop = setInterval(() => {
         dispatch({type: 'FALL'})
         dispatch({type: 'RUNNING'})
 
