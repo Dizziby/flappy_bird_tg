@@ -1,4 +1,4 @@
-import {useCallback, useEffect} from 'react'
+import {useEffect, useRef} from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import {Foreground} from './Foreground'
 import {useAppDispatch} from '../hooks/useAppDispatch'
@@ -15,10 +15,6 @@ export const Game = () => {
   const pipes = useAppSelector((state) => state.pipe.pipes)
   const x = useAppSelector((state) => state.pipe.x)
 
-  // console.log(birdY, "birdY")
-  // console.log(x, "pipe.x")
-  // console.log(status, "status")
-
   const dispatch = useAppDispatch()
 
   if (status === 'game-over') {
@@ -26,21 +22,36 @@ export const Game = () => {
     clearInterval(pipeGenerator)
   }
 
-  const handleKeyPress = (e) => {
-    if (e.keyCode === 32) {
-      fly()
-    }
-    if (status !== 'playing') {
-      start(status)
-    }
-  }
-
   useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.keyCode === 32) {
+        fly()
+      }
+      if (status !== 'playing') {
+        start(status)
+      }
+    }
     document.addEventListener('keypress',handleKeyPress)
     return () => {
       document.removeEventListener('keypress',handleKeyPress)
     }
   }, [status])
+
+  const birdYRef = useRef(null)
+  const xRef = useRef(null)
+  const pipesRef = useRef(null)
+
+  useEffect(() => {
+    birdYRef.current = birdY
+  }, [birdY])
+
+  useEffect(() => {
+    xRef.current = x
+  }, [x])
+
+  useEffect(() => {
+    pipesRef.current = pipes
+  }, [pipes])
 
   const start = (status) => {
     if (status !== 'playing') {
@@ -48,7 +59,7 @@ export const Game = () => {
         dispatch({type: 'FALL'})
         dispatch({type: 'RUNNING'})
 
-        check()
+        check(birdYRef.current, xRef.current, pipesRef.current)
       }, 200)
 
       pipeGenerator = setInterval(() => {
@@ -63,7 +74,7 @@ export const Game = () => {
     dispatch({type: 'FLY'})
   }
 
-  const check = () => {
+  const check = (birdY, x, pipes) => {
     const challenge = pipes
       .map(({topHeight}, i) => {
         return {
@@ -79,7 +90,7 @@ export const Game = () => {
         }
       })
 
-    if (birdY > 512 - 108) {
+    if (birdY > 512 - 108 || birdY < 0) {
       dispatch({type: 'GAME_OVER'})
     }
 
