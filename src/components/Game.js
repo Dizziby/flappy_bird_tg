@@ -72,8 +72,8 @@ export const Game = () => {
   }, [pipes])
 
   useEffect(() => {
-    const screenWidth = window ? window.screen.width : 390
-    const screenHeight = window ? window.screen.height : 512
+    const screenWidth = window ? window.innerWidth : 390
+    const screenHeight = window ? window.innerHeight : 512
     setHeightScreen(screenHeight)
     dispatch(changeWidthScreenAC(screenWidth))
   }, [])
