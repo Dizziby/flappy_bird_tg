@@ -11,10 +11,6 @@ body {
 
 @font-face {
   font-family: 'Flappy Bird';
-  src: url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.eot');
-  src: url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.eot?#iefix') format('embedded-opentype'),
-    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff2') format('woff2'),
-    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff') format('woff'),
-    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.ttf') format('truetype'),
-    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.svg#Flappy Bird') format('svg');
+  src: url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff2') format('woff2'),
+    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff') format('woff')
 }
