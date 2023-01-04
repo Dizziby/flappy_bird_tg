@@ -18,10 +18,10 @@ export const pipeReducer = (state: StoreType = initialState, action: any): Store
       }
       return {...state, x: state.x - 10}
     case 'GENERATE':
-      let topHeight = Math.round((Math.random() * state.heightScreen) / 1.5) + 40
-      if (topHeight > state.heightScreen) {
-        topHeight = state.heightScreen - 200
-      }
+      let topHeight = Math.round(Math.random() * 200) + 40
+      // if (topHeight > state.heightScreen) {
+      //   topHeight = state.heightScreen - 200
+      // }
       return {...state, pipes: [...state.pipes, {topHeight}]}
     case 'GAME_OVER':
       return initialState
