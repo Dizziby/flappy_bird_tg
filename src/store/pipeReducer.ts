@@ -8,7 +8,7 @@ const initialState = {
   pipes: [],
 }
 
-export const pipeReducer = (state: StoreType = initialState, action: any) => {
+export const pipeReducer = (state: StoreType = initialState, action: any): StoreType => {
   switch (action.type) {
     case 'RUNNING':
       if (!state.pipes.length) {

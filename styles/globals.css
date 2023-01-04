@@ -2,25 +2,19 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  font-family: 'Flappy Bird', sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+@font-face {
+  font-family: 'Flappy Bird';
+  src: url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.eot');
+  src: url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.eot?#iefix') format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff2') format('woff2'),
+    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.woff') format('woff'),
+    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.ttf') format('truetype'),
+    url('//db.onlinewebfonts.com/t/364d81f3f71bc524d2235f8b406e732b.svg#Flappy Bird') format('svg');
 }
