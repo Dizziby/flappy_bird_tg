@@ -7,3 +7,12 @@
   background: url("../../public/image/bg.png");
   overflow: hidden;
 }
+
+.title {
+  height: 50px;
+  width: 250px;
+  margin: 0 auto;
+  position: absolute;
+  left: calc(50% - 125px);
+  top: 100px
+}
