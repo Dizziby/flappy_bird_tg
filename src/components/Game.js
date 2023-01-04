@@ -1,11 +1,11 @@
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef} from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import {Foreground} from './Foreground'
 import {useAppDispatch} from '../hooks/useAppDispatch'
 import {Bird} from './Bird'
 import {Pipe} from './Pipe'
 import styles from './Game.module.css'
-import {changeWidthScreenAC} from '../store/pipeReducer'
+import {setHeightScreenAC, setWidthScreenAC} from '../store/pipeReducer'
 import flappyBird from '../../public/image/flappyBird.png'
 import gameOver from '../../public/image/gameOver.png'
 import play from '../../public/image/play.png'
@@ -20,7 +20,9 @@ export const Game = () => {
   const pipes = useAppSelector((state) => state.pipe.pipes)
   const x = useAppSelector((state) => state.pipe.x)
   const count = useAppSelector((state) => state.game.count)
-  const [heightScreen, setHeightScreen] = useState(512)
+  const heightScreen = useAppSelector((state) => state.pipe.heightScreen)
+
+  console.log(pipes, 'pipes')
 
   const dispatch = useAppDispatch()
 
@@ -35,12 +37,11 @@ export const Game = () => {
         fly()
       }
     }
-    const handleClick = (e) => {
+    const handleClick = () => {
       if (status === 'playing') {
         fly()
       }
     }
-
     document.addEventListener('keypress', handleKeyPress)
     document.addEventListener('click', handleClick)
     return () => {
@@ -74,8 +75,8 @@ export const Game = () => {
   useEffect(() => {
     const screenWidth = window ? window.innerWidth : 390
     const screenHeight = window ? window.innerHeight : 512
-    setHeightScreen(screenHeight)
-    dispatch(changeWidthScreenAC(screenWidth))
+    dispatch(setWidthScreenAC(screenWidth))
+    dispatch(setHeightScreenAC(screenHeight))
   }, [])
 
   const start = (status) => {
@@ -165,7 +166,7 @@ export const Game = () => {
           </div>
         </>
       )}
-      <Pipe heightScreen={heightScreen}/>
+      <Pipe />
       <Foreground />
     </div>
   )
