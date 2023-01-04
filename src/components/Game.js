@@ -19,6 +19,7 @@ export const Game = () => {
   const birdY = useAppSelector((state) => state.bird.y)
   const pipes = useAppSelector((state) => state.pipe.pipes)
   const x = useAppSelector((state) => state.pipe.x)
+  const count = useAppSelector((state) => state.game.count)
 
   const dispatch = useAppDispatch()
 
@@ -34,7 +35,7 @@ export const Game = () => {
       }
     }
     const handleClick = (e) => {
-      if( status === 'playing') {
+      if (status === 'playing') {
         fly()
       }
     }
@@ -118,9 +119,11 @@ export const Game = () => {
     if (challenge.length) {
       const {x1, y1, x2, y2} = challenge[0]
 
-      console.log(x1, y1, x2, y2)
+      if (x1 === 70) {
+        dispatch({type: 'CHANGE_COUNT'})
+      }
 
-      if ((x1 < 120 && 120 < x1 + 52 && birdY < y1 ) || (x2 < 120 && 120 < x2 + 52 && birdY > y2 - 36)) {
+      if ((x1 < 120 && 120 < x1 + 52 && birdY < y1) || (x2 < 120 && 120 < x2 + 52 && birdY > y2 - 36)) {
         dispatch({type: 'GAME_OVER'})
       }
     }
@@ -129,18 +132,24 @@ export const Game = () => {
   return (
     <div className={styles.game}>
       {status === 'playing' ? (
-        <Bird />
+          <>
+            <Bird />
+            <div className={styles.count}>
+              {count}
+            </div>
+
+          </>
+
       ) : status === 'game-over' ? (
         <>
           <div className={styles.title}>
             <Image src={gameOver} width={250} height={50} alt={'Flappy bird'} />
-            <button onClick={handleStartGame} style={{position: 'relative', left: '75px', top: '50px', background: "none", border: "0"}}>
-              <Image
-                  src={play}
-                  width={100}
-                  height={50}
-                  alt={'Play'}
-              />
+            <div className={styles.count}>{count}</div>
+            <button
+              onClick={handleStartGame}
+              style={{position: 'relative', left: '75px', top: '90px', background: 'none', border: '0'}}
+            >
+              <Image src={play} width={100} height={50} alt={'Play'} />
             </button>
           </div>
         </>
@@ -148,13 +157,11 @@ export const Game = () => {
         <>
           <div className={styles.title}>
             <Image src={flappyBird} width={250} height={50} alt={'Game over'} />
-            <button onClick={handleStartGame} style={{position: 'relative', left: '75px', top: '50px', background: "none", border: "0"}}>
-              <Image
-                  src={play}
-                  width={100}
-                  height={50}
-                  alt={'Play'}
-              />
+            <button
+              onClick={handleStartGame}
+              style={{position: 'relative', left: '75px', top: '50px', background: 'none', border: '0'}}
+            >
+              <Image src={play} width={100} height={50} alt={'Play'} />
             </button>
           </div>
         </>

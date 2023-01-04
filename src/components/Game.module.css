@@ -16,3 +16,14 @@
   left: calc(50% - 125px);
   top: 100px
 }
+
+.count {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  z-index: 2;
+  font-family: 'Flappy Bird', sans-serif;
+  font-size: 48px;
+  color: #343434;
+  margin: 20px auto;
+}
