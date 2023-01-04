@@ -2,7 +2,7 @@ import React from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import styles from './Pipe.module.css'
 
-export const Pipe = () => {
+export const Pipe = ({heightScreen}) => {
   const x = useAppSelector((state) => state.pipe.x)
   const pipes = useAppSelector((state) => state.pipe.pipes)
 
@@ -39,7 +39,7 @@ export const Pipe = () => {
               top: topHeight + 100,
               left: x + i * 200,
               width: 52,
-              height: 512 - topHeight - 100,
+              height: heightScreen - topHeight - 100,
               // background: `url(${BottomPipeImage})`,
               transition: 'left 300ms',
             }}

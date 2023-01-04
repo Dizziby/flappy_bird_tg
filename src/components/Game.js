@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useAppSelector} from '../hooks/useAppSelector'
 import {Foreground} from './Foreground'
 import {useAppDispatch} from '../hooks/useAppDispatch'
@@ -20,6 +20,7 @@ export const Game = () => {
   const pipes = useAppSelector((state) => state.pipe.pipes)
   const x = useAppSelector((state) => state.pipe.x)
   const count = useAppSelector((state) => state.game.count)
+  const [heightScreen, setHeightScreen] = useState(512)
 
   const dispatch = useAppDispatch()
 
@@ -72,6 +73,8 @@ export const Game = () => {
 
   useEffect(() => {
     const screenWidth = window ? window.screen.width : 390
+    const screenHeight = window ? window.screen.height : 512
+    setHeightScreen(screenHeight)
     dispatch(changeWidthScreenAC(screenWidth))
   }, [])
 
@@ -112,7 +115,7 @@ export const Game = () => {
         }
       })
 
-    if (birdY > 512 - 134 || birdY < 0) {
+    if (birdY > heightScreen - 134 || birdY < 0) {
       dispatch({type: 'GAME_OVER'})
     }
 
@@ -130,16 +133,12 @@ export const Game = () => {
   }
 
   return (
-    <div className={styles.game}>
+    <div className={styles.game} style={{height: `${heightScreen}px`}}>
       {status === 'playing' ? (
-          <>
-            <Bird />
-            <div className={styles.count}>
-              {count}
-            </div>
-
-          </>
-
+        <>
+          <Bird />
+          <div className={styles.count}>{count}</div>
+        </>
       ) : status === 'game-over' ? (
         <>
           <div className={styles.title}>
@@ -166,7 +165,7 @@ export const Game = () => {
           </div>
         </>
       )}
-      <Pipe />
+      <Pipe heightScreen={heightScreen}/>
       <Foreground />
     </div>
   )
