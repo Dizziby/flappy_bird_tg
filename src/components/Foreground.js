@@ -7,7 +7,8 @@ export const Foreground = () => {
       style={{
         position: 'absolute',
         bottom: 0,
-        width: 306,
+        width: "100%",
+          // width: 306,
         height: 108,
         // background: `url(${FgImage})`,
       }}
