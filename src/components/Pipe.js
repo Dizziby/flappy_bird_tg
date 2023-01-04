@@ -25,7 +25,7 @@ export const Pipe = () => {
             style={{
               position: 'absolute',
               top: 0,
-              left: x + (i * heightScreen) / 2.5,
+              left: x + i * 200,
               width: 52,
               height: topHeight,
               // background: `url(${TopPipeImage})`,
@@ -38,7 +38,7 @@ export const Pipe = () => {
             style={{
               position: 'absolute',
               top: topHeight + 100,
-              left: x + (i * heightScreen) / 2.5,
+              left: x + i * 200,
               width: 52,
               height: heightScreen - topHeight - 100,
               // background: `url(${BottomPipeImage})`,

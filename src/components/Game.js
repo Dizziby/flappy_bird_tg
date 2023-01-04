@@ -22,8 +22,6 @@ export const Game = () => {
   const count = useAppSelector((state) => state.game.count)
   const heightScreen = useAppSelector((state) => state.pipe.heightScreen)
 
-  console.log(pipes, 'pipes')
-
   const dispatch = useAppDispatch()
 
   if (status === 'game-over') {
@@ -73,11 +71,26 @@ export const Game = () => {
   }, [pipes])
 
   useEffect(() => {
-    const screenWidth = window ? window.innerWidth : 390
-    const screenHeight = window ? window.innerHeight : 512
+    const screenWidth = window.innerWidth
+    const screenHeight = window.innerHeight
     dispatch(setWidthScreenAC(screenWidth))
     dispatch(setHeightScreenAC(screenHeight))
-  }, [])
+  }, [dispatch])
+
+  useEffect(() => {
+    const screenWidth = window.innerWidth
+    const screenHeight =  window.innerHeight
+
+    const handleResizeWindow = () => {
+      dispatch(setWidthScreenAC(screenWidth))
+      dispatch(setHeightScreenAC(screenHeight))
+    }
+
+    window.addEventListener(`resize`, handleResizeWindow)
+    return () => {
+      window.removeEventListener(`resize`, handleResizeWindow)
+    }
+  }, [dispatch])
 
   const start = (status) => {
     if (status !== 'playing') {
