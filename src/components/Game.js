@@ -5,6 +5,7 @@ import {useAppDispatch} from '../hooks/useAppDispatch'
 import {Bird} from './Bird'
 import {Pipe} from './Pipe'
 import styles from './Game.module.css'
+import {changeWidthScreenAC} from '../store/pipeReducer';
 
 let gameLoop
 let pipeGenerator
@@ -31,9 +32,18 @@ export const Game = () => {
         start(status)
       }
     }
+    const handleClick = (e) => {
+      fly()
+      if (status !== 'playing') {
+        start(status)
+      }
+    }
+
     document.addEventListener('keypress',handleKeyPress)
+    document.addEventListener('click',handleClick)
     return () => {
       document.removeEventListener('keypress',handleKeyPress)
+      document.removeEventListener('click',handleClick)
     }
   }, [status])
 
@@ -52,6 +62,12 @@ export const Game = () => {
   useEffect(() => {
     pipesRef.current = pipes
   }, [pipes])
+
+  useEffect(() => {
+    const screenWidth = window ? window.screen.width : 390
+    dispatch(changeWidthScreenAC(screenWidth))
+  } , [])
+
 
   const start = (status) => {
     if (status !== 'playing') {
