@@ -2,16 +2,20 @@ type StoreType = {
   x: number
   pipes: any[]
   heightScreen: number
+  widthScreen: number
 }
 
 const initialState = {
-  x: 390,
+  x: 400,
   pipes: [],
   heightScreen: 512,
+  widthScreen: 400,
 }
 
 export const pipeReducer = (state: StoreType = initialState, action: any): StoreType => {
   switch (action.type) {
+    case 'START':
+      return {...state, x: state.widthScreen}
     case 'RUNNING':
       if (!state.pipes.length) {
         return state
@@ -24,9 +28,9 @@ export const pipeReducer = (state: StoreType = initialState, action: any): Store
       // }
       return {...state, pipes: [...state.pipes, {topHeight}]}
     case 'GAME_OVER':
-      return initialState
+      return {...state, pipes: []}
     case 'SET_WIDTH_SCREEN':
-      return {...state, x: action.widthScreen}
+      return {...state, widthScreen: action.widthScreen}
     case 'SET_HEIGHT_SCREEN':
       return {...state, heightScreen: action.heightScreen}
     default:

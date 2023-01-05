@@ -71,26 +71,29 @@ export const Game = () => {
   }, [pipes])
 
   useEffect(() => {
-    const screenWidth = window.innerWidth
-    const screenHeight = window.innerHeight
+    const screenWidth = Math.floor(window.screen.width / 10) * 10
     dispatch(setWidthScreenAC(screenWidth))
-    dispatch(setHeightScreenAC(screenHeight))
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
-    const screenWidth = window.innerWidth
-    const screenHeight =  window.innerHeight
+    const screenHeight = window.screen.height
+    dispatch(setHeightScreenAC(screenHeight))
+  }, [])
 
-    const handleResizeWindow = () => {
-      dispatch(setWidthScreenAC(screenWidth))
-      dispatch(setHeightScreenAC(screenHeight))
-    }
+  console.log(typeof window !== 'undefined' && window.screen.height, "window.screen.height")
+  console.log(typeof window !== 'undefined' && window.innerHeight, "window.innerHeight")
 
-    window.addEventListener(`resize`, handleResizeWindow)
-    return () => {
-      window.removeEventListener(`resize`, handleResizeWindow)
-    }
-  }, [dispatch])
+  // useEffect(() => {
+  //   const screenHeight = window.innerHeight
+  //   const handleResizeWindow = () => {
+  //     dispatch(setHeightScreenAC(screenHeight))
+  //   }
+  //
+  //   window.addEventListener(`resize`, handleResizeWindow)
+  //   return () => {
+  //     window.removeEventListener(`resize`, handleResizeWindow)
+  //   }
+  // }, [dispatch])
 
   const start = (status) => {
     if (status !== 'playing') {
@@ -136,6 +139,8 @@ export const Game = () => {
     if (challenge.length) {
       const {x1, y1, x2, y2} = challenge[0]
 
+      console.log(x1, y1, x2, y2, 'x1, y1, x2, y2')
+
       if (x1 === 70) {
         dispatch({type: 'CHANGE_COUNT'})
       }
@@ -145,9 +150,10 @@ export const Game = () => {
       }
     }
   }
+  console.log(heightScreen, x, 'heightScreen, x')
 
   return (
-    <div className={styles.game} style={{height: `${heightScreen}px`}}>
+    <div className={styles.game} style={{height: `100vh`}}>
       {status === 'playing' ? (
         <>
           <Bird />
