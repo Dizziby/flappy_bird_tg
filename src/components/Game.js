@@ -71,29 +71,14 @@ export const Game = () => {
   }, [pipes])
 
   useEffect(() => {
-    const screenWidth = Math.floor(window.screen.width / 10) * 10
+    const screenWidth = Math.floor(window.innerWidth / 10) * 10
     dispatch(setWidthScreenAC(screenWidth))
   }, [])
 
   useEffect(() => {
-    const screenHeight = window.screen.height
+    const screenHeight = window.innerHeight
     dispatch(setHeightScreenAC(screenHeight))
   }, [])
-
-  console.log(typeof window !== 'undefined' && window.screen.height, "window.screen.height")
-  console.log(typeof window !== 'undefined' && window.innerHeight, "window.innerHeight")
-
-  // useEffect(() => {
-  //   const screenHeight = window.innerHeight
-  //   const handleResizeWindow = () => {
-  //     dispatch(setHeightScreenAC(screenHeight))
-  //   }
-  //
-  //   window.addEventListener(`resize`, handleResizeWindow)
-  //   return () => {
-  //     window.removeEventListener(`resize`, handleResizeWindow)
-  //   }
-  // }, [dispatch])
 
   const start = (status) => {
     if (status !== 'playing') {
